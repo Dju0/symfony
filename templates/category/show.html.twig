@@ -3,24 +3,28 @@
 {% block title %}Catégorie : {{ category.name }}{% endblock %}
 
 {% block body %}
-    <h1>Catégorie : {{ category.name }}</h1>
-
-    <div>
-        <h2>Programmes :</h2>
-        {% if programs %}
-            <ul>
-                {% for program in programs %}
-                    <li>
-                        <a href="{{ path('program_show', {'id': program.id}) }}">
-                            {{ program.title }} 
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucun programme trouvé.</p>
-        {% endif %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Catégorie : {{ category.name }}</h1>
+        <div>
+            <h2 class="mb-3">Programmes :</h2>
+            {% if programs %}
+                <div class="row">
+                    {% for program in programs %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card bg-dark text-white">
+                                <img class="card-img-top" src="{{ program.poster }}" alt="Poster de {{ program.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ program.title }}</h5>
+                                    <a href="{{ path('program_show', {'id': program.id}) }}" class="btn btn-orange">Voir la fiche</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Aucun programme trouvé.</p>
+            {% endif %}
+        </div>
+        <a href="{{ path('category_index') }}" class="btn btn-secondary mt-3">Retour aux catégories</a>
     </div>
-
-    <a href="{{ path('category_index') }}">Retour aux catégories</a>
 {% endblock %}

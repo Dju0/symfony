@@ -105,3 +105,77 @@
     width: auto; /* maintain aspect ratio */
     margin-right: 0.5rem; /* adjust the spacing between the logo and the text */
 }
+
+/* Exemple de style adapté pour Bootstrap */
+.card {
+    background: #404040;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card-title {
+    font-family: 'Martel Sans';
+    font-weight: 700;
+    color: #FFFFFF;
+    /* Autres styles... */
+}
+
+.card-text {
+    font-family: 'Maitree';
+    font-weight: 700;
+    color: #FFFFFF;
+    /* Autres styles... */
+}
+
+/* Autres styles adaptés... */
+/* Styles de base */
+body {
+    background-color: #211F1F;
+    color: #FFFFFF;
+    font-family: 'Martel Sans', sans-serif;
+}
+/* Media */
+.media {
+    background-color: #D9D9D9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.media img {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.media-body {
+    margin-left: 15px;
+}
+
+/* Saisons */
+.list-group-item {
+    background-color: #404040;
+    color: #FFFFFF;
+    border: none;
+}
+
+.list-group-item a {
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.list-group-item:hover {
+    background-color: #333333;
+}
+
+/* Bouton Retour */
+.btn-primary {
+    background-color: #F17A0C;
+    border: none;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: #E06807;
+}
+ .card-footer {
+    background-color: #F17A0C;
+    color: #FFFFFF;
+ }

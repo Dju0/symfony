@@ -13,7 +13,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $program = new Program();
-        $program->setTitle('Walking dead');
+        $program->setTitle('The Walking Dead');
         $program->setSynopsis('Des zombies envahissent la terre');
         $program->setCategory($this->getReference('category_Action'));
         $manager->persist($program);
@@ -30,7 +30,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         $program = new Program();
         $program->setTitle('Star Wars : Ahsoka');
-        $program->setSynopsis('Les aventures d/Ahsoka');
+        $program->setSynopsis('Les aventures d\'Ahsoka');
         $program->setCategory($this->getReference('category_Science Fiction'));
         $manager->persist($program);
         $this->addReference('program_2', $program);
