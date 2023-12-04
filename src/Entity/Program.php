@@ -82,7 +82,7 @@ class Program
         return $this->synopsis;
     }
 
-    public function setSynopsis(string $synopsis): static
+    public function setSynopsis(string $synopsis): self
     {
         $this->synopsis = $synopsis;
 
@@ -94,7 +94,7 @@ class Program
         return $this->poster;
     }
 
-    public function setPoster(?string $poster): static
+    public function setPoster(?string $poster): self
     {
         $this->poster = $poster;
 

@@ -9,7 +9,11 @@
             {% for program in programs %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img class="card-img-top" src="{{ program.poster }}" alt="Poster de {{ program.title }}">
+                        {% if program.poster %}
+                            <img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster de {{ program.title }}">
+                        {% else %}
+                            <!-- Vous pouvez mettre une image par défaut ici ou laisser cette partie vide -->
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ program.title }}</h5>
                             <p class="card-text">{{ program.synopsis }}</p>

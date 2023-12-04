@@ -1,26 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catégorie : {{ category.name }}{% endblock %}
+{% block title %}Liste des Catégories{% endblock %}
 
 {% block body %}
-    <h1>Catégorie : {{ category.name }}</h1>
-
-    <div>
-        <h2>Programmes :</h2>
-        {% if programs %}
-            <ul>
-                {% for program in programs %}
-                    <li>
-                        <a href="{{ path('program_show', {'id': program.id}) }}">
-                            {{ program.title }} 
-                        </a>
-                    </li>
+    <div class="container mt-4">
+        <h1 class="mb-4">Liste des Catégories</h1>
+        {% if categories|length > 0 %}
+            <div class="row">
+                {% for category in categories %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ category.name }}</h5>
+                                <a href="{{ path('category_show', {'categoryName': category.name}) }}" class="btn btn-primary">Voir les programmes</a>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
-            <p>Aucun programme trouvé.</p>
+            <p class="text-muted">Aucune catégorie trouvée.</p>
         {% endif %}
     </div>
-
-    <a href="{{ path('category_index') }}">Retour aux catégories</a>
 {% endblock %}

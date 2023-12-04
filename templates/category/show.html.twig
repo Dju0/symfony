@@ -11,20 +11,25 @@
                 <div class="row">
                     {% for program in programs %}
                         <div class="col-md-4 mb-3">
-                            <div class="card bg-dark text-white">
-                                <img class="card-img-top" src="{{ program.poster }}" alt="Poster de {{ program.title }}">
+                            <div class="card">
+                                {% if program.poster %}
+                                    <img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster de {{ program.title }}">
+                                {% else %}
+                                    <!-- Image par défaut -->
+                                {% endif %}
                                 <div class="card-body">
                                     <h5 class="card-title">{{ program.title }}</h5>
-                                    <a href="{{ path('program_show', {'id': program.id}) }}" class="btn btn-orange">Voir la fiche</a>
+                                    <p class="card-text">{{ program.synopsis }}</p>
+                                    <a href="{{ path('program_show', {'id': program.id}) }}" class="btn btn-primary">Voir la fiche</a>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
             {% else %}
-                <p class="text-muted">Aucun programme trouvé.</p>
+                <p class="text-white-custom">Aucun programme trouvé.</p>
             {% endif %}
         </div>
-        <a href="{{ path('category_index') }}" class="btn btn-secondary mt-3">Retour aux catégories</a>
+        <a href="{{ path('program_index') }}" class="btn btn-primary">Retour à l'accueil des programmes</a>
     </div>
 {% endblock %}

@@ -4,24 +4,29 @@
 
 {% block body %}
     <div class="container my-4">
-        <h1 class="display-4">{{ program.title }} - Saison {{ season.number }} ({{ season.year }})</h1>
+        <h1 class="display-4">{{ program.title }} - Saison {{ season.number }}</h1>
         <p>{{ season.description }}</p>
 
         <h2 class="mt-4">Épisodes</h2>
         {% if season.episodes|length > 0 %}
-            <ul class="list-group">
+            <div class="row">
                 {% for episode in season.episodes %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>Épisode {{ episode.number }}: {{ episode.title }}</h5>
-                            <p>{{ episode.synopsis }}</p>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Épisode {{ episode.number }}: 
+                                <p>{{ episode.title }}</p></h5>
+                                <p class="card-text">{{ episode.synopsis }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-secondary" href="{{ path('program_episode_show', {'program': program.id, 'season': season.id, 'episode': episode.id}) }}">
+                                    Voir l'épisode
+                                </a>
+                            </div>
                         </div>
-                        <a class="btn btn-primary" href="{{ path('program_episode_show', {'program': program.id, 'season': season.id, 'episode': episode.id}) }}">
-                            Voir l'épisode
-                        </a>
-                    </li>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
             <p class="text-muted">Aucun épisode pour cette saison.</p>
         {% endif %}

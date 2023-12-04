@@ -22,22 +22,26 @@
 }
 
 .navbar-dark .navbar-nav .dropdown-menu {
-    background-color: #404040; /* Dark gray background for dropdowns */
+    background-color: #404040;
+    border-radius: 5px /* Dark gray background for dropdowns */
 }
 
 .navbar-dark .navbar-nav .dropdown-menu .dropdown-item {
     color: white;
     font-size: 16px; /* Adjust as per design */
     font-weight: 700;
+    border-radius: 5px
 }
 
 .navbar-dark .navbar-nav .dropdown-menu .dropdown-item:hover,
 .navbar-dark .navbar-nav .dropdown-menu .dropdown-item:focus {
-    background-color: #333333; /* Darker gray for hover/focus */
+    background-color: #333333;
+    border-radius: 5px /* Darker gray for hover/focus */
 }
 
 .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.1); /* Toggler icon border */
+    border-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px /* Toggler icon border */
 }
 
 .navbar-toggler-icon {
@@ -63,7 +67,8 @@
 /* Ensure Martel Sans is used for dropdown items as well */
 .dropdown-item {
     font-family: 'Martel Sans', sans-serif;
-    font-weight: 700; /* Maintain font weight consistency */
+    font-weight: 700;
+    border-radius: 5px /* Maintain font weight consistency */
 }
 /* assets/styles/app.css */
 
@@ -178,4 +183,126 @@ body {
  .card-footer {
     background-color: #F17A0C;
     color: #FFFFFF;
- }
+}
+.season-list ul.list-group.mx-auto {
+    max-width: 600px;
+}
+.list-group-item.bg-dark {
+    background-color: #404040;
+}
+
+.list-group-item.bg-dark a.text-white {
+    color: #FFFFFF;
+}
+
+.list-group-item.bg-dark:hover {
+    background-color: #333333;
+}
+.text-white-custom {
+    color: #FFFFFF;
+}
+/* ... autres styles ... */
+
+/* Styles pour les menus déroulants */
+.navbar-dark .navbar-nav .dropdown-menu {
+    background-color: #404040; /* Couleur de fond pour les menus déroulants */
+    border-radius: 5px; /* Ajout d'un border-radius de 5px */
+}
+
+.navbar-dark .navbar-nav .dropdown-menu .dropdown-item {
+    color: white;
+    font-size: 16px; /* Ajustez selon le design */
+    font-weight: 700;
+    /* Maintenant, chaque élément du menu déroulant aura également un border-radius */
+    border-radius: 5px;
+}
+
+.navbar-dark .navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar-dark .navbar-nav .dropdown-menu .dropdown-item:focus {
+    background-color: #333333; /* Un gris plus foncé pour le survol/le focus */
+    /* Le border-radius est également appliqué ici pour conserver la cohérence */
+    border-radius: 5px;
+}
+
+.navbar-dark .navbar-nav .nav-link.dropdown-toggle {
+    border-radius: 5px; /* Ajout d'un border-radius de 5px */
+}
+
+.program-details {
+    background-color: #404040; /* Couleur de fond */
+    border-radius: 5px; /* Rayon de bordure */
+    padding: 1em; /* Espacement intérieur */
+}
+
+.synopsis-text {
+    font-size: 1.1em; /* Taille du texte */
+    margin-top: 1.5em; /* Espacement après l'image */
+}
+.card {
+    background-color: #404040;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0; /* arrondir les coins supérieurs */
+}
+
+.card-title {
+    font-size: 1.5em; /* Taille du titre */
+    margin-top: 1rem;
+}
+
+.card-text {
+    font-size: 1.1em; /* Taille du texte */
+    margin: 1rem 0;
+}
+
+/* Styles pour les listes */
+.list-group-item {
+    background-color: #333333;
+    color: #FFFFFF;
+    border: none;
+}
+
+.list-group-item:hover {
+    background-color: #404040;
+}
+
+/* Styles pour les boutons */
+.btn-primary, .btn-secondary {
+    background-color: #F17A0C;
+    color: #FFFFFF;
+    border: none;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    background-color: #E06807;
+}
+.list-group-item a {
+    color: #FFFFFF; /* Couleur des liens */
+    text-decoration: none;
+}
+.card {
+    /* Assure que toutes les cartes ont la même hauteur */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex: 1; /* Permet au corps de la carte de remplir l'espace disponible */
+}
+
+.card-footer {
+    /* Garantit que le pied de page reste en bas de la carte */
+    margin-top: auto;
+}
+
+
+/* Assure que les boutons sont de la même taille */
+.btn-secondary {
+    width: 100%;
+}

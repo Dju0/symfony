@@ -1,0 +1,17 @@
+{# templates/category/new.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Ajouter une série</h1>
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                {{ form_widget(form, {'attr': {'class': 'form-group'}}) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

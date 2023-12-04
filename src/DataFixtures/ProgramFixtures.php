@@ -55,6 +55,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program = new Program();
         $program->setTitle('Arcane');
         $program->setSynopsis('Synopsis de Arcane...');
+        $program->setPoster('build\images\poster-arcane.jpeg');
         $program->setCategory($this->getReference('category_Animation'));
         //... set other program's properties
         $manager->persist($program);
