@@ -33,22 +33,22 @@ Class ProgramController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(Request $request, EntityManagerInterface $entityManager) : Response
     {
+        // Create a new Category Object
         $program = new Program();
+        // Create the associated Form
         $form = $this->createForm(ProgramType::class, $program);
+        // Get data from HTTP request
         $form->handleRequest($request);
-
+        // Was the form submitted ?
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('poster')->getData();
-            if ($file) {
-                $newFilename = $this->uploadFile($file); // Méthode d'upload personnalisée
-                $program->setPoster($newFilename);
-        }
-
             $entityManager->persist($program);
-            $entityManager->flush();
+            $entityManager->flush();            
 
-        // Rediriger après enregistrement
-            return $this->redirectToRoute('program_index');
+            // Deal with the submitted data
+            // For example : persiste & flush the entity
+            // And redirect to a route that display the result
+            // Redirect to categories list
+        return $this->redirectToRoute('program_index');
         }
     
         // Render the form

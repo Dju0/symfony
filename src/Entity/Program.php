@@ -7,8 +7,15 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[UniqueEntity(
+    fields: ['title'],
+    message: 'ce titre existe déjà'
+)]
 class Program
 {
     #[ORM\Id]
@@ -16,11 +23,22 @@ class Program
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le titre ne doit pas être vide')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le titre doit faire moins de 255 caractères'
+    )]
+    private $title;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $synopsis = null;
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'Le synopsis ne doit pas être vide')]
+    #[Assert\Regex(
+        pattern: '/plus belle la vie/i',
+        match: false,
+        message: 'On parle de vraies séries ici'
+    )]
+    private $synopsis;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster = null;
