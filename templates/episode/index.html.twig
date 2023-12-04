@@ -1,39 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Episode index{% endblock %}
+{% block title %}Episode Index{% endblock %}
 
 {% block body %}
-    <h1>Episode index</h1>
+    <div class="container">
+        <h1 class="my-4">Episode Index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Number</th>
-                <th>Synopsis</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for episode in episodes %}
-            <tr>
-                <td>{{ episode.id }}</td>
-                <td>{{ episode.title }}</td>
-                <td>{{ episode.number }}</td>
-                <td>{{ episode.synopsis }}</td>
-                <td>
-                    <a href="{{ path('app_episode_show', {'id': episode.id}) }}">show</a>
-                    <a href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Série</th>
+                    <th>Numéro de la saison</th>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Numéro</th>
+                    <th>Synopsis</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for episode in episodes %}
+                <tr>
+                    
+                    <td>{{ episode.season.program.title }}</td>
+                    <td>{{ episode.season.number }}</td>
+                    <td>{{ episode.id }}</td>
+                    <td>{{ episode.title }}</td>
+                    <td>{{ episode.number }}</td>
+                    <td>{{ episode.synopsis }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" href="{{ path('app_episode_show', {'id': episode.id}) }}">Voir</a>
+                        <p><a class="btn btn-sm btn-secondary" href="{{ path('app_episode_edit', {'id': episode.id}) }}">Editer</a></p>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_episode_new') }}">Create new</a>
+        <a class="btn btn-sm btn-secondary" href="{{ path('app_episode_new') }}">Créer un nouvel épisode</a>
+    </div>
 {% endblock %}

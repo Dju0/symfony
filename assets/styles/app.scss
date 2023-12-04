@@ -306,3 +306,37 @@ body {
 .btn-secondary {
     width: 100%;
 }
+/* Style des formulaires */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333; /* Couleur de texte plus foncée pour correspondre à la page 'program/index' */
+    background-color: #f8f9fa; /* Fond légèrement gris pour un look plus doux */
+    background-clip: padding-box;
+    border: 1px solid #ced4da; /* Garder la bordure subtile */
+    border-radius: .25rem; /* Garder les coins arrondis */
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    /* Ajouter un effet de focus plus prononcé pour correspondre à votre style */
+    box-shadow: none; /* Supprimer l'ombre par défaut */
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff; /* Changer la couleur de la bordure lors du focus */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25); /* Ajouter une ombre subtile lors du focus */
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

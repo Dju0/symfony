@@ -3,9 +3,9 @@
 {% block title %}New Season{% endblock %}
 
 {% block body %}
-    <h1>Create new Season</h1>
+    <h1 class="mb-4">Create new Season</h1>
 
     {{ include('season/_form.html.twig') }}
 
-    <a href="{{ path('app_season_index') }}">back to list</a>
+    <a href="{{ path('app_season_index') }}" class="btn btn-primary mt-3">back to list</a>
 {% endblock %}
