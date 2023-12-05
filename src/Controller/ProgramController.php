@@ -42,7 +42,9 @@ Class ProgramController extends AbstractController
         // Was the form submitted ?
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($program);
-            $entityManager->flush();            
+            $entityManager->flush();
+            
+            $this->addFlash('success', 'Le nouveau programme a été ajouté avec succès.');
 
             // Deal with the submitted data
             // For example : persiste & flush the entity
@@ -85,5 +87,40 @@ Class ProgramController extends AbstractController
         ]);
     }
     
+    #[Route('/{id}/edit', name: 'edit')]
+    public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash('success', 'Le programme a été mis à jour avec succès.');
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($program);
+            $entityManager->flush();
+
+            $this->addFlash('danger', 'Le programme a été supprimé.');
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->redirectToRoute('program_index');
+    }
+
+
 
 }
