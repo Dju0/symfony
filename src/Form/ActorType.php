@@ -20,7 +20,8 @@ class ActorType extends AbstractType
             'class' => Program::class,
             'choice_label' => 'title',
             'multiple' => true, // Si un acteur peut être lié à plusieurs programmes
-            'expanded' => true, // Mettre à true pour un affichage en checkbox
+            'expanded' => true,
+            'by_reference' => false, // Mettre à true pour un affichage en checkbox
         ])
     ;
     }
