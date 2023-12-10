@@ -12,13 +12,16 @@
                 <h1 class="card-title">{{ program.title }}</h1>
                 <p class="card-text">{{ program.synopsis }}</p>
             </div>
+            <div>
+                <h3>Durée totale de la série : {{ duration }}</h3>
+            </div>
             <div class="card-footer">
                 <h2>Saisons</h2>
                 {% if program.seasons|length > 0 %}
                     <ul class="list-group list-group-flush">
                         {% for season in program.seasons %}
                             <li class="list-group-item">
-                                <a href="{{ path('program_season_show', {'program': program.id, 'season': season.id}) }}">
+                                <a href="{{ path('program_season_show', {slug : program.slug, 'season': season.id}) }}">
                                     Saison {{ season.number }}
                                 </a>
                             </li>

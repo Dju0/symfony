@@ -28,6 +28,13 @@
                         Acteurs
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="actorsDropdown">
+                    {% for actor in actors %}
+                    <li>
+                        <a class="dropdown-item" href="{{ path('app_actor_show', {'id': actor.id}) }}">
+                            {{ actor.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
                         <!-- Dropdown items -->
                     </ul>
                 </li>

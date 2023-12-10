@@ -17,8 +17,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ program.title }}</h5>
                             <p class="card-text">{{ program.synopsis }}</p>
-                            <a href="{{ path('program_show', { id: program.id }) }}" class="btn btn-primary">Voir la fiche</a>
-                            <a href="{{ path('program_edit', {'id': program.id}) }}" class="btn btn-primary">Editer</a>
+                            <a href="{{ path('program_show', { slug: program.slug }) }}" class="btn btn-primary">Voir la fiche</a>
+                            <a href="{{ path('program_edit', { slug: program.slug }) }}" class="btn btn-primary">Editer</a>
                         </div>
                         <div class="card-footer">
                             Catégorie : {{ program.category.name }}

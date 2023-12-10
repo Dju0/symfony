@@ -16,10 +16,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">Épisode {{ episode.number }}: 
                                 <p>{{ episode.title }}</p></h5>
+                                <p>Durée : {{ episode.duration }} minutes </p>
                                 <p class="card-text">{{ episode.synopsis }}</p>
                             </div>
                             <div class="card-footer">
-                                <a class="btn btn-secondary" href="{{ path('program_episode_show', {'program': program.id, 'season': season.id, 'episode': episode.id}) }}">
+                                <a class="btn btn-secondary" href="{{ path('program_episode_show', {slug: program.slug, 'season': season.id, 'episode': episode.id}) }}">
                                     Voir l'épisode
                                 </a>
                             </div>
@@ -31,6 +32,6 @@
             <p class="text-muted">Aucun épisode pour cette saison.</p>
         {% endif %}
 
-        <a class="btn btn-secondary mt-3" href="{{ path('program_show', {'id': program.id}) }}">Retour au programme</a>
+        <a class="btn btn-secondary mt-3" href="{{ path('program_show', {slug : program.slug}) }}">Retour au programme</a>
     </div>
 {% endblock %}
