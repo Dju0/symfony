@@ -10,7 +10,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         {% if program.poster %}
-                            <img class="card-img-top" src="{{ asset(program.poster) }}" alt="Poster de {{ program.title }}">
+                            <img class="card-img-top" src="{{ vich_uploader_asset(program, 'posterFile') }}" alt="{{ program.title }}">
                         {% else %}
                             <!-- Vous pouvez mettre une image par défaut ici ou laisser cette partie vide -->
                         {% endif %}

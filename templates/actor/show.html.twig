@@ -10,6 +10,9 @@
                 <th>Name</th>
                 <td>{{ actor.name }}</td>
             </tr>
+                <th>Photo</th>
+                <td><img src="{{ vich_uploader_asset(actor, 'imageFile') }}" alt="{{ actor.name }}" width="200"></td>
+            </tr>
                 <th>Séries</th>
             <td><ul>
                 {% for program in actor.programs %}
