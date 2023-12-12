@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Episode;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
@@ -10,8 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\ProgramDuration;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 
 #[Route('/episode')]
 class EpisodeController extends AbstractController
@@ -25,11 +28,12 @@ class EpisodeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_episode_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, MailerInterface $mailer,): Response
     {
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($episode->getTitle());
@@ -38,6 +42,17 @@ class EpisodeController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Le nouvel épisode a été ajouté avec succès.');
+
+            $email = (new Email())
+            ->from($this->getParameter('mailer_from'))
+            ->to('julienginestal@orange.fr')
+            ->subject('Un nouvel épisode vient d\'être publié !')
+            ->html($this->renderView('Episode/newEpisodeEmail.html.twig', [
+                'episode' => $episode,
+                'program' => $episode->getSeason()->getProgram()
+            ]));
+            
+            $mailer->send($email);
 
             return $this->redirectToRoute('app_episode_index', [], Response::HTTP_SEE_OTHER);
         }

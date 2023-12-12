@@ -14,6 +14,8 @@ use App\Form\ProgramType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\ProgramDuration;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/program', name: 'program_')]
 Class ProgramController extends AbstractController
@@ -31,7 +33,7 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/new', name: 'new')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger) : Response
+    public function new(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager, SluggerInterface $slugger) : Response
     {
         // Create a new Category Object
         $program = new Program();
@@ -48,14 +50,17 @@ Class ProgramController extends AbstractController
             
             $this->addFlash('success', 'Le nouveau programme a été ajouté avec succès.');
 
-            // Deal with the submitted data
-            // For example : persiste & flush the entity
-            // And redirect to a route that display the result
-            // Redirect to categories list
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('julienginestal@orange.fr')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
+                
+            $mailer->send($email);
+
         return $this->redirectToRoute('program_index');
         }
     
-        // Render the form
         return $this->render('program/new.html.twig', [
             'form' => $form,
         ]);
@@ -88,11 +93,11 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/{slug}/season/{season}/episode/{episode}', name: 'episode_show')]
-    public function showEpisode(Program $program, Season $season, Episode $episode, SluggerInterface $slugger): Response
+    public function showEpisode(string $slug, Program $program, Season $season, Episode $episode, SluggerInterface $slugger): Response
     {
         $slug = $slugger->slug($program->getTitle());
         $program->setSlug($slug);
-        $episode->setSlug($slug);
+       
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
