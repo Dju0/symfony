@@ -15,6 +15,30 @@
             </div>
         </div>
 
+        {# Afficher le formulaire de commentaire si l'utilisateur est connecté #}
+        {% if app.user %}
+            <h3>Ajouter un commentaire</h3>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+            {{ form_end(form) }}
+        {% endif %}
+
+        {# Afficher les commentaires existants #}
+        <h3>Commentaires</h3>
+        {% for comment in comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>{{ comment.author.email }}</strong>:({{ comment.createdAt|date('d/m/Y') }}):
+                        {{ comment.comment }}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun commentaire pour cet épisode.</p>
+        {% endfor %}
+
         <div class="d-flex justify-content-between">
             <a href="{{ path('program_season_show', {slug : program.slug, 'season': season.id}) }}" class="btn btn-secondary">
                 Retour à la saison

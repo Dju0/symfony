@@ -16,6 +16,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\ProgramDuration;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use App\Entity\Comment;
+use App\Form\CommentType;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[Route('/program', name: 'program_')]
 Class ProgramController extends AbstractController
@@ -93,15 +97,41 @@ Class ProgramController extends AbstractController
     }
 
     #[Route('/{slug}/season/{season}/episode/{episode}', name: 'episode_show')]
-    public function showEpisode(string $slug, Program $program, Season $season, Episode $episode, SluggerInterface $slugger): Response
+    public function showEpisode(string $slug, Program $program, Season $season, Episode $episode, SluggerInterface $slugger, Request $request, UserInterface $user, EntityManagerInterface $entityManager): Response
     {
         $slug = $slugger->slug($program->getTitle());
         $program->setSlug($slug);
        
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Associer le commentaire à l'épisode et à l'utilisateur
+            $comment->setEpisode($episode);
+            $comment->setAuthor($user); // Assurez-vous que l'utilisateur est connecté
+
+            // Enregistrer le commentaire en base de données
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            // Rediriger vers la même page pour éviter les soumissions de formulaire en double
+            return $this->redirectToRoute('program_episode_show', [
+                'slug' => $program ->getSlug(),
+                'season' => $season->getId(),
+                'episode' => $episode->getId()
+            ]);
+        }
+
+        // Récupérer les commentaires de l'épisode
+        $comments = $entityManager->getRepository(Comment::class)->findBy(['episode' => $episode]);
+
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form,
+            'comments' => $comments,
         ]);
     }
     
