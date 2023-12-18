@@ -72,6 +72,10 @@ class Program
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'programs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
     
     
     public function __construct()
@@ -218,6 +222,18 @@ class Program
     public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

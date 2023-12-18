@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Program;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,12 +21,15 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $user = $this->getReference('contributor_user');
+
         $program = new Program();
         $program->setTitle('The Walking Dead');
         $program->setSynopsis('Des zombies envahissent la terre');
         $program->setCategory($this->getReference('category_Action'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($this->getReference('contributor_user'));
         $manager->persist($program);
         $this->addReference('program_0', $program);
         $manager->flush();
@@ -36,6 +40,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Fantastique'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($this->getReference('admin_user'));
         $manager->persist($program);
         $this->addReference('program_1', $program);
         $manager->flush();
@@ -46,6 +51,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Science Fiction'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($user);
         $manager->persist($program);
         $this->addReference('program_2', $program);
         $manager->flush();
@@ -56,6 +62,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Thriller'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($user);
         $manager->persist($program);
         $this->addReference('program_3', $program);
         $manager->flush();
@@ -66,6 +73,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Science Fiction'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($user);
         $manager->persist($program);
         $this->addReference('program_4', $program);
         $manager->flush();
@@ -77,6 +85,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_Animation'));
         $slug = $this->slugger->slug($program->getTitle());
         $program->setSlug($slug);
+        $program->setOwner($user);
         //... set other program's properties
         $manager->persist($program);
         $this->addReference('program_5', $program);
@@ -88,6 +97,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CategoryFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

@@ -9,14 +9,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    
     private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher) 
     {
         $this->passwordHasher = $passwordHasher;
     }
-
 
     public function load(ObjectManager $manager): void
     {
@@ -28,9 +26,26 @@ class UserFixtures extends Fixture
             $contributor,
             'contributorpassword'
         );
-
         $contributor->setPassword($hashedPassword);
         $manager->persist($contributor);
+
+        // Ajout d'une référence pour le contributeur
+        $this->addReference('contributor_user', $contributor);
+
+         // Création d’un utilisateur de type “contributeur” (= auteur)
+         $user = new User();
+         $user->setEmail('julienginestal@orange.fr');
+         $user->setRoles(['ROLE_CONTRIBUTOR']);
+         $hashedPassword = $this->passwordHasher->hashPassword(
+             $user,
+             'azertyuiop'
+         );
+         $user->setPassword($hashedPassword);
+         $manager->persist($user);
+ 
+         // Ajout d'une référence pour le contributeur
+         $this->addReference('user_user', $contributor);
+ 
 
         // Création d’un utilisateur de type “administrateur”
         $admin = new User();
@@ -43,9 +58,10 @@ class UserFixtures extends Fixture
         $admin->setPassword($hashedPassword);
         $manager->persist($admin);
 
-        // Sauvegarde des 2 nouveaux utilisateurs :
+        // Ajout d'une référence pour l'administrateur
+        $this->addReference('admin_user', $admin);
+
+        // Sauvegarde des 2 nouveaux utilisateurs
         $manager->flush();
     }
-
-
 }

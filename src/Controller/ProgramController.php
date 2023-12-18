@@ -49,6 +49,7 @@ Class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
             $program->setSlug($slug);
+            $program->setOwner($this->getUser());
             $entityManager->persist($program);
             $entityManager->flush();
             
@@ -119,7 +120,8 @@ Class ProgramController extends AbstractController
             return $this->redirectToRoute('program_episode_show', [
                 'slug' => $program ->getSlug(),
                 'season' => $season->getId(),
-                'episode' => $episode->getId()
+                'episode' => $episode->getId(),
+                'comment' => $comment->getId()
             ]);
         }
 
@@ -135,12 +137,18 @@ Class ProgramController extends AbstractController
         ]);
     }
     
+    
     #[Route('/{slug}/edit', name: 'edit')]
     public function edit(string $slug,Request $request, ProgramRepository $programRepository, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $program = $programRepository->findOneBy(['slug' => $slug]);
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
+
+        if ($this->getUser() !== $program->getOwner()) {
+            // If not the owner, throws a 403 Access Denied exception
+            throw $this->createAccessDeniedException('Only the owner can edit the program!');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slug($program->getTitle());
@@ -171,6 +179,29 @@ Class ProgramController extends AbstractController
         }
 
         return $this->redirectToRoute('program_index');
+    }
+
+    #[Route('/comment/{id}/delete', name: 'comment_delete', methods: ['POST'])]
+    public function deleteComment(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+            if ($this->isGranted('ROLE_ADMIN') || $comment->getAuthor() === $this->getUser()) {
+                $entityManager->remove($comment);
+                $entityManager->flush();
+                $this->addFlash('success', 'Commentaire supprimé avec succès.');
+            } else {
+                $this->addFlash('danger', 'Vous n\'avez pas le droit de supprimer ce commentaire.');
+            }
+        }
+
+        
+
+        return $this->redirectToRoute('program_episode_show', [
+            'slug' => $comment->getEpisode()->getSeason()->getProgram()->getSlug(),
+            'season' => $comment->getEpisode()->getSeason()->getId(),
+            'episode' => $comment->getEpisode()->getId(),
+            'comment' => $comment->getId()
+        ]);
     }
 
 
