@@ -44,12 +44,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 </li>
-                <li class="nav-item">
-                    <span class="navbar-text">{{ app.user.email }}</span>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_profile') }}">Mon compte</a>
                 </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                 </li>
             {% endif %}
         </ul>
