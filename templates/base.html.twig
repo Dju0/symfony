@@ -10,7 +10,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Holtwood+One+SC&family=Martel+Sans:wght@700&display=swap" rel="stylesheet">
         {% endblock %}
     </head>
-    <body>
+    <body {{ stimulus_controller('theme') }}{{ stimulus_target('theme', 'body') }}>
         {% block header %}
             {{ render(controller('App\\Controller\\NavbarController::navbar')) }}
         {% endblock %}
