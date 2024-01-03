@@ -11,6 +11,7 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
+use App\Form\SearchProgramType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Service\ProgramDuration;
@@ -26,14 +27,22 @@ Class ProgramController extends AbstractController
 {
 
     #[Route('/', name: 'index')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(Request $request,ProgramRepository $programRepository): Response
     {
-         $programs = $programRepository->findAll();
-
-         return $this->render(
-             'program/index.html.twig',
-             ['programs' => $programs]
-         );
+        $form = $this->createForm(SearchProgramType::class);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeNameOrActor($search);
+        } else {
+            $programs = $programRepository->findAll();
+        }
+    
+        return $this->render('program/index.html.twig', [
+            'programs' => $programs,
+            'form' => $form,
+        ]);
     }
 
     #[Route('/new', name: 'new')]

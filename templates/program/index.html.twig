@@ -5,6 +5,10 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="mb-4">Toutes les séries :</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button>Search</button>
+        {{ form_end(form) }}
         <div class="row">
             {% for program in programs %}
                 <div class="col-md-4 mb-3">
