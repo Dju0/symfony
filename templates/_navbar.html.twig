@@ -9,20 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Catégories
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                        {% for category in categories %}
-                        <li>
-                            <a class="dropdown-item" href="{{ path('category_show', {'categoryName': category.name}) }}">
-                                {{ category.name }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                {{ component('Navbar') }}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="actorsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Acteurs

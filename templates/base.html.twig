@@ -11,9 +11,11 @@
         {% endblock %}
     </head>
     <body {{ stimulus_controller('theme') }}{{ stimulus_target('theme', 'body') }}>
+    
         {% block header %}
             {{ render(controller('App\\Controller\\NavbarController::navbar')) }}
         {% endblock %}
+        <aside>{{ component('LastEpisode') }}</aside>
         {% for category, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ category }}" role="alert">
@@ -21,9 +23,10 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        {% block body %}{% endblock %}
+        {% block body %} {% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        
     </body>
 </html>

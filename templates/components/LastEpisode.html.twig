@@ -1,0 +1,27 @@
+<div{{ attributes }} class="container mt-4">
+    <h2 class="mb-4">Derniers épisodes :</h2>
+    <div class="row">
+        {% for episode in this.getLatestEpisodes %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <!-- Vous pouvez ajouter une image pour l'épisode si disponible -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ episode.title }}</h5>
+                        <p class="card-text">
+                            <strong>Saison :</strong> {{ episode.season.number }},
+                            <strong>Épisode :</strong> {{ episode.number }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Série :</strong> {{ episode.season.program.title }}
+                        </p>
+                        <!-- Ajouter un lien vers le détail de l'épisode si nécessaire -->
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col">
+                <p>Aucun nouvel épisode disponible.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
