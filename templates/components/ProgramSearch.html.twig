@@ -1,0 +1,18 @@
+<div{{ attributes }} class="container mt-4">
+    <div class="mb-3">
+        <label class="form-label" for="search">Rechercher une série</label>
+        <input type="search" id="search" class="form-control" value="{{ query }}" data-model="query">
+    </div>
+
+    {% for program in this.programs %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ program.id }} / {{ program.title }} - Catégorie : {{ program.category.name }}
+                </h5>
+                <p class="card-text">{{ program.synopsis }}</p>
+                <a href="{{ path('program_show', { slug: program.slug }) }}" class="btn btn-primary">Voir plus</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

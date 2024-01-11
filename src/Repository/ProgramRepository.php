@@ -22,19 +22,33 @@ class ProgramRepository extends ServiceEntityRepository
     }
 
 
-    public function findLikeNameOrActor(string $search)
+    public function findLikeName(string $name)
     {
-        
-        $queryBuilder = $this->createQueryBuilder('p');
-        $queryBuilder->leftJoin('p.actors', 'a');
-        $queryBuilder->where($queryBuilder->expr()->like('p.title', ':search'))
-                    ->orWhere($queryBuilder->expr()->like('a.name', ':search'))
-                    ->setParameter('search', '%' . $search . '%');
-        $queryBuilder->orderBy('p.title', 'ASC');
-
-        
-        return $queryBuilder->getQuery()->getResult();
+        $result = [];
+        if(!empty($name)) {
+            $result = $this->createQueryBuilder('p')
+                ->where('p.title LIKE :name')
+                ->setParameter('name', '%' . $name . '%')
+                ->orderBy('p.title', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+        return $result;
     }
 
-
+    public function findLikeProgramNameOrActorName(string $name)
+    {
+        $result = [];
+        if (!empty($name)) {
+            $result = $this->createQueryBuilder('p')
+                ->innerJoin('p.actors', 'a')
+                ->where('p.title LIKE :name')
+                ->orWhere('a.lastname like :name')
+                ->setParameter('name', '%' . $name . '%')
+                ->orderBy('p.title', 'ASC')
+                ->getQuery()
+                ->getResult();
+        }
+        return $result;
+    }
 }
